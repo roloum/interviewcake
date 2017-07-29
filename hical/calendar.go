@@ -36,18 +36,19 @@ func Sort(meetings [][]int) [][]int {
 }
 
 func merge(left, right [][]int) [][]int {
-	llen, rlen, l, r := len(left), len(right), 0, 0
+	llen, rlen, l, r, i := len(left), len(right), 0, 0, 0
 
-	var slice [][]int
+	var slice = make([][]int, len(left)+len(right))
 
 	for l < llen || r < rlen {
 		if (l < llen && r < rlen && left[l][0] <= right[r][0]) || (r == rlen && l < llen) {
-			slice = append(slice, left[l])
+			slice[i] = left[l]
 			l++
 		} else {
-			slice = append(slice, right[r])
+			slice[i] = right[r]
 			r++
 		}
+		i++
 	}
 
 	return slice
