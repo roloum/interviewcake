@@ -4,23 +4,26 @@ package prodint
 //the list of the products of every integer except the one at that index
 func GetProductsOfAllIntsExceptAtIndex(numbers []int) []int {
 
-	length := len(numbers)
-	if length < 2 {
-		panic("Array must contain at least 2 elements")
+	numbersLen := len(numbers)
+
+	if numbersLen < 2 {
+		panic("Not enough integers")
 	}
 
-	products := make([]int, length)
-
-	//iterate the array and save in result the product of all the numbers after current index
+	//Iterate the array twice to compute the products before and after the index
+	//Compute the productSoFar as we iterate the array before index
+	//First iteration initializes the result
 	productSoFar := 1
-	for i, val := range numbers {
+	products := make([]int, numbersLen)
+	for i := 0; i < numbersLen; i++ {
 		products[i] = productSoFar
-		productSoFar *= val
+		productSoFar *= numbers[i]
 	}
 
-	//reverse the array multiplying the result by the product of all numbers before current index
+	//Second iteration reverses the array and computes the productSoFar after index
+	//and multiply the current result in product by productSoFar
 	productSoFar = 1
-	for i := len(numbers) - 1; i >= 0; i-- {
+	for i := numbersLen - 1; i >= 0; i-- {
 		products[i] *= productSoFar
 		productSoFar *= numbers[i]
 	}

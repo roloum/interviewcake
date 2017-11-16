@@ -32,3 +32,15 @@ func TestGetMaxProfitPanic(t *testing.T) {
 	maxProfit := GetMaxProfit([]int{10})
 	t.Log(maxProfit)
 }
+
+//Tests panic for negative price
+func TestGetMaxProfitNegativePricePanic(t *testing.T) {
+	defer func() {
+		if p := recover(); p == nil {
+			t.Error("GetMaxProfit call did not panic with negative input")
+		}
+	}()
+
+	maxProfit := GetMaxProfit([]int{-1, 0})
+	t.Log(maxProfit)
+}

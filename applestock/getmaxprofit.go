@@ -1,36 +1,41 @@
 package applestock
 
-import "fmt"
-
 //GetMaxProfit ...
 //Return the maximum profit one could make from a list of stock prices
 func GetMaxProfit(stock []int) int {
-	if len(stock) < 2 {
-		panic("Getting a profit requires at least two prices")
+
+	stockLen := len(stock)
+	//Validate list size
+	if stockLen < 2 {
+		panic("Function requires list with at least 2 prices")
+	}
+
+	//Precompute the max profit with the first two values of the list
+	if stock[0] < 0 {
+		panic("Price can't be negative")
 	}
 	minPrice := stock[0]
 	maxProfit := stock[1] - stock[0]
-	minLoss := maxProfit
 
-	for _, price := range stock {
-		if price <= 0 {
-			panic(fmt.Sprintf("Invalid price %v", price))
+	//Iterate the list from index 1 and check if the currentProfit > maxProfit
+	for i := 1; i < stockLen; i++ {
+
+		if stock[i] < 0 {
+			panic("Price can't be negative")
 		}
-		newProfit := price - minPrice
-		if newProfit > maxProfit {
-			maxProfit = newProfit
-		} else if newProfit < 0 {
-			if newProfit > minLoss {
-				minLoss = newProfit
-			}
-			minPrice = price
+		currentPrice := stock[i]
+		currentProfit := currentPrice - minPrice
+
+		//Update maxProfit
+		if currentProfit > maxProfit {
+			maxProfit = currentProfit
 		}
 
+		//Update minPrice
+		if currentPrice < minPrice {
+			minPrice = currentPrice
+		}
 	}
 
-	if maxProfit > 0 {
-		return maxProfit
-	}
-	return minLoss
-
+	return maxProfit
 }
