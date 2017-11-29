@@ -20,19 +20,17 @@ func FindElement(list []int, element int) (int, error) {
 
 	leftIndex, rightIndex, middle := 0, count-1, int(count/2)
 
-	for leftIndex < middle {
-		if list[middle] == element {
+	for {
+		if list[middle] == element { //Found element
 			return element, nil
-		} else if list[middle] > element {
+		} else if leftIndex == middle { //No more elements to check, errNotFound
+			return 0, errNotFound
+		} else if list[middle] > element { //Find in right portion or array
 			middle, leftIndex = int((rightIndex-leftIndex)/2), middle
-		} else {
+		} else { //Find in left portion of array
 			middle, rightIndex = int((rightIndex-leftIndex)/2), middle
 		}
 	}
-	if list[middle] == element {
-		return element, nil
-	}
-	return 0, errNotFound
 
 }
 
