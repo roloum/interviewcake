@@ -1,6 +1,9 @@
 package findinset
 
-import "errors"
+import (
+	"errors"
+	"math"
+)
 
 var errNotFound = errors.New("Element does not exist")
 
@@ -18,25 +21,26 @@ func FindElement(list []int, element int) (int, error) {
 		return 0, errNotFound
 	}
 
-	leftIndex, rightIndex, middle := 0, count-1, int(count/2)
+	left, right := 0, count-1
 
 	for {
-		if list[middle] == element { //Found element
-			return element, nil
-		} else if leftIndex == middle { //No more elements to check, errNotFound
-			return 0, errNotFound
-		} else if list[middle] > element { //Find in right portion or array
-			middle, leftIndex = int((rightIndex-leftIndex)/2), middle
-		} else { //Find in left portion of array
-			middle, rightIndex = int((rightIndex-leftIndex)/2), middle
-		}
-	}
 
+		mid := left + int(math.Ceil(float64(right-left)/2))
+
+		if list[mid] == element { //Found the element
+			return element, nil
+		} else if left == right { //No more elements to check, not found
+			return 0, errNotFound
+		} else if element > list[mid] { //Look to the right
+			left = mid + 1
+		} else if element < list[mid] { //Look to the left
+			right = mid - 1
+		}
+
+	}
 }
 
 //FindElementRecursive Finds element in asc sorted list of ints recursively
-//Using a helper function that receives a receives the reference of the array
-//So it does not make additional copies of the data structure
 func FindElementRecursive(list []int, element int) (int, error) {
 
 	count := len(list)
@@ -49,23 +53,24 @@ func FindElementRecursive(list []int, element int) (int, error) {
 		return 0, errNotFound
 	}
 
-	return findElementHelper(&list, element, 0, int(count/2), count-1)
+	return findElementHelper(list, element)
 }
 
 //findElementHelper recursively finds an element in a asc sorted int list
-func findElementHelper(list *[]int, element, leftIndex, middle,
-	rightIndex int) (int, error) {
+func findElementHelper(list []int, element int) (int, error) {
 
-	if (*list)[middle] == element { //Found?
-		return element, nil
-	} else if leftIndex == middle { //No more elements to check
-		return 0, errNotFound
-	} else if (*list)[middle] > element { //Search right side
-		return findElementHelper(list, element, middle,
-			int((rightIndex-leftIndex)/2), rightIndex)
+	length := len(list)
+	if length > 0 {
+
+		//Found element
+		if middle := int(length / 2); list[middle] == element {
+			return element, nil
+		} else if element > list[middle] { //Look to the right
+			return findElementHelper(list[middle+1:], element)
+		} else { //Look to the left
+			return findElementHelper(list[:middle], element)
+		}
 	}
-	//Search left side
-	return findElementHelper(list, element, leftIndex,
-		int((rightIndex-leftIndex)/2), middle)
+	return 0, errNotFound
 
 }

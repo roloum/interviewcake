@@ -12,7 +12,8 @@ var testCases = []struct {
 	err     error
 	result  int
 }{
-	{[]int{1, 3, 5, 7, 9}, 5, nil, 5},
+	{[]int{1, 3, 5, 7, 9, 10}, 5, nil, 5},
+	{[]int{1, 3, 5, 7, 9}, 9, nil, 9},
 	{[]int{1}, 1, nil, 1},
 	{[]int{1}, 2, errNotFound, 0},
 	{[]int{1, 2}, 1, nil, 1},
