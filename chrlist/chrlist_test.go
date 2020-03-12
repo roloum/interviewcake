@@ -2,37 +2,55 @@ package chrlist
 
 import (
 	"reflect"
+	"strings"
 	"testing"
 )
 
-//TestReverseOne tests reverse function for one character
-func TestReverseOne(t *testing.T) {
-	list, expected := []string{"a"}, []string{"a"}
+//TestReverseOne tests reverse function for one character list
+func TestReverse(t *testing.T) {
+	list := [][]string{
+		[]string{"a"},
+		[]string{"r", "o", "l", "a", "n", "d"},
+		[]string{"r", "o", "l", "a", "n", "d", "o"},
+	}
+	expected := [][]string{
+		[]string{"a"},
+		[]string{"d", "n", "a", "l", "o", "r"},
+		[]string{"o", "d", "n", "a", "l", "o", "r"},
+	}
 
-	result := Reverse(list)
-	if !reflect.DeepEqual(result, expected) {
-		t.Errorf("List: %v, expected: %v, received: %s", list, expected, result)
+	for i, l := range list {
+
+		result := Reverse(l)
+		if !reflect.DeepEqual(result, expected[i]) {
+			t.Errorf("List %v: %v, expected: %v, received: %s", i+1, l, expected[i],
+				result)
+		}
 	}
 }
 
-//TestReverseEven tests reverse function for list with even # of characters
-func TestReverseEven(t *testing.T) {
-	list, expected := []string{"r", "o", "l", "a", "n", "d"},
-		[]string{"d", "n", "a", "l", "o", "r"}
+func TestReverseWords(t *testing.T) {
+	list := [][]string{
+		strings.Split("vault", ""),
+		strings.Split("thief cake", ""),
+		strings.Split("one another get", ""),
+		strings.Split("rat the ate cat the", ""),
+		strings.Split("yummy is cake bundt chocolate", ""),
+		strings.Split("", "")}
+	expected := [][]string{
+		strings.Split("vault", ""),
+		strings.Split("cake thief", ""),
+		strings.Split("get another one", ""),
+		strings.Split("the cat ate the rat", ""),
+		strings.Split("chocolate bundt cake is yummy", ""),
+		strings.Split("", "")}
 
-	result := Reverse(list)
-	if !reflect.DeepEqual(result, expected) {
-		t.Errorf("List: %v, expected: %v, received: %s", list, expected, result)
-	}
-}
+	for i, l := range list {
 
-//TestReverseOdd tests reverse function for list with odd # of characters
-func TestReverseOdd(t *testing.T) {
-	list, expected := []string{"r", "o", "l", "a", "n", "d", "o"},
-		[]string{"o", "d", "n", "a", "l", "o", "r"}
-
-	result := Reverse(list)
-	if !reflect.DeepEqual(result, expected) {
-		t.Errorf("List: %v, expected: %v, received: %s", list, expected, result)
+		t.Logf("Case #%v", i+1)
+		ReverseWords(l)
+		if !reflect.DeepEqual(l, expected[i]) {
+			t.Errorf("List %v: %v, expected: %v", i+1, l, expected[i])
+		}
 	}
 }
