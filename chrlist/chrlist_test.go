@@ -21,10 +21,9 @@ func TestReverse(t *testing.T) {
 
 	for i, l := range list {
 
-		result := Reverse(l)
-		if !reflect.DeepEqual(result, expected[i]) {
-			t.Errorf("List %v: %v, expected: %v, received: %s", i+1, l, expected[i],
-				result)
+		Reverse(l)
+		if !reflect.DeepEqual(l, expected[i]) {
+			t.Errorf("List %v: %v, expected: %v", i+1, l, expected[i])
 		}
 	}
 }
