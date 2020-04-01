@@ -1,30 +1,17 @@
 package inflightentertainment
 
-import "errors"
+//CanTwoMoviesFillFlight returns boolean indicating whether there are two numbers
+//in movieLenghts whose sum equals flightLength
+func CanTwoMoviesFillFlight(movieLengths []int, flightLength int) bool {
 
-var errMinElements = errors.New("List needs at least two elements")
+	s := make(map[int]int)
 
-//AreThereTwoMoviesWithLength ...
-func AreThereTwoMoviesWithLength(list []int, length int) (bool, error) {
-	count := len(list)
-
-	if count < 2 {
-		return false, errMinElements
-	}
-
-	//Unique map where we store the length of movies
-	uniqueMap := make(map[int]int)
-
-	for _, firstMovieLength := range list {
-		secondMovieLength := length - firstMovieLength
-
-		if uniqueMap[secondMovieLength] == 1 {
-			return true, nil
+	for _, length := range movieLengths {
+		if _, ok := s[flightLength-length]; ok {
+			return true
 		}
-
-		uniqueMap[secondMovieLength] = 1
-
+		s[length] = 1
 	}
 
-	return false, nil
+	return false
 }
