@@ -8,11 +8,6 @@ func IsFirstComeFirstServed(takeOutOrders, dineInOrders,
 
 	ilen, jlen, klen := len(takeOutOrders), len(dineInOrders), len(servedOrders)
 
-	//Check that the number of orders add up
-	if ilen+jlen != klen {
-		return false
-	}
-
 	//Iterate the served orders as I find the order number on either the takeOut
 	//or the dineIn array. Once found, increment the counter for takeOut or dineIn
 	//If one server order is not found in the next position of takeOut/dineIn
@@ -27,6 +22,11 @@ func IsFirstComeFirstServed(takeOutOrders, dineInOrders,
 			return false
 		}
 
+	}
+
+	//Did not get until the end of each array? Served orders not in order
+	if i != ilen || j != jlen {
+		return false
 	}
 
 	return true
