@@ -1,35 +1,10 @@
-package superbalanced
+package tree
 
 import (
 	"math"
 
 	"github.com/golang-collections/collections/stack"
 )
-
-//Node ...
-type Node struct {
-	value interface{}
-	//left and right have to be references
-	left, right *Node
-}
-
-//NewNode ...
-func NewNode(value interface{}) *Node {
-	n := Node{value, nil, nil}
-	return &n
-}
-
-//InsertLeft ...
-func (n *Node) InsertLeft(value interface{}) *Node {
-	n.left = NewNode(value)
-	return n.left
-}
-
-//InsertRight ...
-func (n *Node) InsertRight(value interface{}) *Node {
-	n.right = NewNode(value)
-	return n.right
-}
 
 //IsBalanced Determines if the tree is superbalanced
 //A tree is "superbalanced" if the difference between the depths of any two

@@ -1,4 +1,4 @@
-package superbalanced
+package tree
 
 import (
 	"testing"
