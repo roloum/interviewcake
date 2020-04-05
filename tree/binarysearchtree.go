@@ -25,21 +25,16 @@ func IsBinarySearch(root *Node) bool {
 		//Dequeue node
 		n := q.Dequeue().(node)
 
-		//left node must be less than node but more than node's parent
-		if n.node.left != nil && (n.node.left.value.(int) >= n.node.value.(int) ||
-			n.node.left.value.(int) <= n.min) {
-			return false
-			//right node must be more than node but less than node's parent
-		} else if n.node.right != nil &&
-			(n.node.right.value.(int) <= n.node.value.(int) ||
-				n.node.right.value.(int) >= n.max) {
+		if n.node.value.(int) > n.max || n.node.value.(int) < n.min {
 			return false
 		}
 
 		//Add children to queue
+		//left node must be less than node but more than node's parent
 		if n.node.left != nil {
 			q.Enqueue(node{n.node.left, n.min, n.node.value.(int)})
 		}
+		//right node must be more than node but less than node's parent
 		if n.node.right != nil {
 			q.Enqueue(node{n.node.right, n.node.value.(int), n.max})
 		}
