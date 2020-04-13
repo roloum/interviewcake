@@ -1,6 +1,9 @@
 package duplicate
 
 //FindRepeat Finds a number that appears more than once
+//We have a list of integers, where:
+// - The integers are in the range 1..n1..n
+// - The list has a length of n+1n+1
 //Can't sort in place
 func FindRepeat(numbers []int) int {
 
